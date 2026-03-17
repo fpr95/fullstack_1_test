@@ -3,9 +3,7 @@ package cl.duoc.ejemplo.controller;
 import cl.duoc.ejemplo.model.User;
 import cl.duoc.ejemplo.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -19,7 +17,7 @@ public class UserController {
         repository = new UserRepository();
     }
 
-    @GetMapping
+    @GetMapping("")
     public String test() {
         return "Hola Mundo";
     }
@@ -29,4 +27,22 @@ public class UserController {
         return repository.showUsers();
     }
 
+    @PostMapping("/save-user")
+    public User saveUser(@RequestBody User u){
+        repository.saveUser(u);
+        return u;
+    }
+
+    @DeleteMapping("/user")
+    public void borrarUsuario(@RequestParam("correo") String correo){
+        User u = repository.buscarUsuario(correo);
+        if(u != null){
+            repository.deleteUser(u);
+        }
+    }
+
+    @GetMapping
+    public User obtenerUsuario(@RequestParam("correo") String correo){
+        return repository.buscarUsuario(correo);
+    }
 }

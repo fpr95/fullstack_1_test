@@ -2,8 +2,7 @@ package cl.duoc.ejemplo.model;
 
 import lombok.*;
 
-@Getter
-@Setter
+@Data
 public class User {
 
     private String name;
